@@ -1,0 +1,25 @@
+{
+  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "defaultSeverity": "warning",
+  "rules": {
+    "ordered-imports": false,
+    "object-literal-sort-keys": false,
+    "member-access": false,
+    "quotemark": false,
+    "no-console": false,
+    "semicolon": false,
+    "jsx-no-lambda": false,
+    "interface-name" : [false]
+  },
+  "linterOptions": {
+    "exclude": [
+      "docs/**",
+      "docs_components/**",
+      "scripts/**",
+      "config/**/*.js",
+      "node_modules/**/*.ts",
+      "coverage/lcov-report/*.js",
+      "typedoc.js"
+    ]
+  }
+}
