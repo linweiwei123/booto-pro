@@ -1,61 +1,85 @@
 import * as React from 'react';
-import { Layout, Menu, Icon } from 'antd';
+import styles from './sideBar.scss';
+import { Icon, Menu } from 'antd';
+import SubMenu from 'antd/lib/menu/SubMenu';
+import { connect } from 'booto';
+import { Link } from 'react-router-dom';
 
-const { Header, Sider, Content } = Layout;
+export interface ISidebarProps {
+  collapsed: boolean
+}
 
-class SiderDemo extends React.Component {
-  state = {
-    collapsed: false,
-  };
-
-  toggle = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  };
+class SideBar extends React.Component<ISidebarProps> {
 
   render() {
+
     return (
-      <Layout>
-        <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
-          <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1">
-              <Icon type="user" />
-              <span>nav 1</span>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Icon type="video-camera" />
-              <span>nav 2</span>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <Icon type="upload" />
-              <span>nav 3</span>
-            </Menu.Item>
-          </Menu>
-        </Sider>
-        <Layout>
-          <Header style={{ background: '#fff', padding: 0 }}>
-            <Icon
-              className="trigger"
-              type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-              onClick={this.toggle}
-            />
-          </Header>
-          <Content
-            style={{
-              margin: '24px 16px',
-              padding: 24,
-              background: '#fff',
-              minHeight: 280,
-            }}
+      <div id="layout-sidebar" className={styles.sidebar}>
+        <div className={styles['content-header']}>
+          <div className={styles.logo}></div>
+          <div className={`${styles.title} ${this.props.collapsed ? 'hide' : ''}`}>CODE-PUSH</div>
+        </div>
+        <Menu
+          defaultSelectedKeys={['1']}
+          defaultOpenKeys={['sub1']}
+          mode="inline"
+          theme="dark"
+          inlineCollapsed={this.props.collapsed}
+        >
+          <Menu.Item key="1">
+            <Link to="/">
+              <Icon type="pie-chart" />
+              <span>ZIP包管理</span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="2">
+            <Link to="/user">
+              <Icon type="desktop" />
+              <span>用户设置</span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="3">
+            <Icon type="inbox" />
+            <span>Option 3</span>
+          </Menu.Item>
+          <SubMenu
+            key="sub1"
+            title={
+              <span>
+                <Icon type="mail" />
+                <span>Navigation One</span>
+              </span>
+            }
           >
-            {this.props.children}
-          </Content>
-        </Layout>
-      </Layout>
+            <Menu.Item key="5">Option 5</Menu.Item>
+            <Menu.Item key="6">Option 6</Menu.Item>
+            <Menu.Item key="7">Option 7</Menu.Item>
+            <Menu.Item key="8">Option 8</Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="sub2"
+            title={
+              <span>
+                <Icon type="appstore" />
+                <span>Navigation Two</span>
+              </span>
+            }
+          >
+            <Menu.Item key="9">Option 9</Menu.Item>
+            <Menu.Item key="10">Option 10</Menu.Item>
+            <SubMenu key="sub3" title="Submenu">
+              <Menu.Item key="11">Option 11</Menu.Item>
+              <Menu.Item key="12">Option 12</Menu.Item>
+            </SubMenu>
+          </SubMenu>
+        </Menu>
+      </div>
     );
   }
 }
 
-export default SiderDemo;
+const mapStateToProps = (state: any) => ({
+  collapsed: state.layout.collapsed
+});
+
+export default connect(mapStateToProps)(SideBar);

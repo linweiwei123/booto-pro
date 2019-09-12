@@ -1,0 +1,1 @@
+export const LAYOUT_COLLAPSED_SET = 'layout/collapsed/set';

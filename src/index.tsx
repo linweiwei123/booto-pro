@@ -1,8 +1,10 @@
 import * as React from 'react';
+import 'antd/dist/antd.css';
+import './styles/index.scss';
 import booto, { Middleware } from 'booto';
 import { createLogger } from 'redux-logger';
 import stateConfig from './store/stateConfig';
-import { actionRecord } from './store/middlewares';
+import { actionRecord, promiseMiddle } from './store/middlewares';
 import { isDev } from './utils/env';
 import App from './views/App';
 
@@ -14,6 +16,7 @@ if(isDev){
 }
 
 booto.use(middlewares.concat([
+  promiseMiddle,
   actionRecord
 ]));
 

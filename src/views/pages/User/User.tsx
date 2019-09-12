@@ -49,4 +49,4 @@ const User = (props:any) => {
   )
 };
 
-export default connect(({user}:any) =>({history: user.history}), {routePush: push})(User)
+export default connect((state:any) =>({history: state.user.history}), {routePush: push})(User)
